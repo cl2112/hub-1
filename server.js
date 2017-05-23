@@ -24,7 +24,7 @@ app.set("view engine", "handlebars");
 var mongoose = require("mongoose");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/week18day3mongoose");
+mongoose.connect("mongodb://localhost/hub-1");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -72,7 +72,7 @@ app.use(express.static("public"));
 // ======
 
 app.get("/", function(req, res) {
-  res.render("index", {});
+  res.json({didItWork:"Yes"});
 });
 
 
