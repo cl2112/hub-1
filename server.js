@@ -72,7 +72,7 @@ app.use(express.static("public"));
 // ======
 
 app.get("/", function(req, res) {
-  res.json({didItWork:"Yes"});
+  res.render("index");
 });
 
 
