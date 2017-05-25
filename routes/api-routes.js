@@ -30,7 +30,7 @@ app.get("/api/scrape/kotaku", function (req, res) {
 	      result.pic = $(this).children("div.item__content").children("figure").children("a").children("div").children("picture").children("source").attr("data-srcset");
 	      result.blurb = $(this).children("div.item__content").children("div.excerpt").children("p").text();
 
-	      console.log(result);
+	      // console.log(result);
 
 	      var entry = new Article(result);
 

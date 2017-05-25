@@ -1,10 +1,11 @@
 <div class="container">
 	<div class="row">
-		{{#each site}}
+		{{#each article}}
 		<div class="col-xs-12">
-			<a href="hub-2/{{title}}"><h1>{{title}}</h1></a>
-			<h3>{{tagline}}</h3>
+			<a href="hub-3/{{title}}"> <h1>{{title}}</h1> </a>
+			<h3>{{blurb}}</h3>
 			<a href="{{link}}" target="_blank"><h4>{{link}}</h4></a>
+			<img src="{{pic}}">
 		</div>
 		{{/each}}
 	</div>

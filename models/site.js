@@ -15,6 +15,10 @@ var SiteSchema = new Schema({
     type: String,
     required: true
   },
+  tagline: {
+    type: String,
+    required: false
+  },
   // This only saves one note's ObjectId, ref refers to the Note model
   articles: [{
     type: Schema.Types.ObjectId,

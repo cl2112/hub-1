@@ -1,7 +1,20 @@
+var Site = require("../models/site.js");
+var Article = require("../models/article.js");
+
 module.exports = function(app) {
 
   	app.get("/", function(req, res) {
-    	res.render("index");
+  		
+  		Site.find({}, function (err, site) {
+  			if (err) {
+  				throw err;
+  			}
+  			
+  			console.log(site);
+  			
+  			res.render("index", {site});
+  		});
+
   	});
 
   	app.get("/signup", function(req, res){
@@ -20,8 +33,21 @@ module.exports = function(app) {
 
 
 
-  	app.get("/hub-2/:site", function(req,res) {
-	  	res.json({DidItWork: "yep"});
+  	app.get("/hub-2/:site", function (req,res) {
+
+  		Article.find({}, function (err, article) {
+  			if (err) {
+  				throw err;
+  			}
+
+  			console.log(article);
+
+  			res.render("hub-2", {article});
+  		});
+
+  		
+
+	  	
   	});
 
 
