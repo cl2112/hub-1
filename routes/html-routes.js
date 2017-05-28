@@ -65,7 +65,7 @@ module.exports = function(app) {
     		} else {
     			var note = article.notes;
 
-    			res.render("hub-3", {note, article});
+    			res.render("hub-3", {article, note});
     		}
     	})
   	});

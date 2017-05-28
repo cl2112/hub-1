@@ -1,19 +1,23 @@
 <div class="container">
 	<div class="row">
-		{{#each article}}
+		
 		<div class="col-xs-12 well well-lg" style="margin: 5% 0;">
-			<a href="/hub-3/{{title}}"> <h1>{{title}}</h1> </a>
-			<h3>{{blurb}}</h3>
-			<a href="{{link}}" target="_blank"><h4>{{link}}</h4></a>
-			<img class="img-responsive" src="{{pic}}">
+			<h1>{{article.title}}</h1>
+			<h3>{{article.blurb}}</h3>
+			<a href="{{article.link}}" target="_blank"><h4>{{article.link}}</h4></a>
+			<img class="img-responsive" src="{{article.pic}}">
 		</div>
-		{{/each}}
-		{{#each note}}
-		<div class="col-xs-12 well well-lg" style="margin: 5% 0;">
-			<h3>{{user}}</h3>
-			<p>{{text}}</p>
+		
+		<div class="col-xs-12">
+			<h1 class="text-center">Comments</h1>
+			{{#each note}}
+			<div class="col-xs-12 well well-lg" style="margin: 5% 0;">
+				<h3>{{user}}</h3>
+				<p>{{text}}</p>
+			</div>
+			{{/each}}
 		</div>
-		{{/each}}
+		
 		<div class="col-xs-12 well well-lg">
 			<form action="/api/comment" method="POST">
 				<h3>Add a comment</h3>
