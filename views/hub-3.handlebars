@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="row">
+		{{#each article}}
+		<div class="col-xs-12 well well-lg" style="margin: 5% 0;">
+			<a href="/hub-3/{{title}}"> <h1>{{title}}</h1> </a>
+			<h3>{{blurb}}</h3>
+			<a href="{{link}}" target="_blank"><h4>{{link}}</h4></a>
+			<img class="img-responsive" src="{{pic}}">
+		</div>
+		{{/each}}
+		{{#each note}}
+		<div class="col-xs-12 well well-lg" style="margin: 5% 0;">
+			<h3>{{user}}</h3>
+			<p>{{text}}</p>
+		</div>
+		{{/each}}
+		<div class="col-xs-12 well well-lg">
+			<form action="/api/comment" method="POST">
+				<h3>Add a comment</h3>
+				<textarea class="form-control" name="comment" rows="3"></textarea>
+				<br>
+				<button class="pull-right btn btn-primary" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>

@@ -8,7 +8,8 @@ var UserSchema = new Schema({
   // title is a required string
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // link is a required string
   pass: {

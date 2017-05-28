@@ -30,6 +30,21 @@ footer {
 	
 }
 
+.main-navbar-links {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
 
+.main-navbar-links li {
+	display: inline-block;
+	padding-top: 30px;
+}
+
+.main-navbar-links a {
+	color: #fafafa;
+	border-left: 1px solid #a586c7;
+	border-right: 1px solid #a586c7;
+}
 
 

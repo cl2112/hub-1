@@ -1,5 +1,7 @@
 var Site = require("../models/site.js");
 var Article = require("../models/article.js");
+var Note = require("../models/note.js");
+var User = require("../models/user.js");
 
 module.exports = function(app) {
 
@@ -55,7 +57,17 @@ module.exports = function(app) {
 
 
    	app.get("/hub-3/:article", function(req,res) {
-    	res.json({DidItWork: "yep"});
+    	Article.findOne({title: req.params.article})
+    	.populate("notes")
+    	.exec( function (err, article) {
+    		if (err) {
+    			throw err;
+    		} else {
+    			var note = article.notes;
+
+    			res.render("hub-3", {note, article});
+    		}
+    	})
   	});
 
 

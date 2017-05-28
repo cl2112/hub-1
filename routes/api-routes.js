@@ -3,18 +3,60 @@
 var request = require("request");
 var cheerio = require("cheerio");
 
-var Article = require("../models/article.js");
 var Site = require("../models/site.js");
+var Article = require("../models/article.js");
+var Note = require("../models/note.js");
+var User = require("../models/user.js");
 //=================================================================================
 
 module.exports = function(app) {
 
 app.post("/api/signup", function (req, res) {
-	res.json(req.body);
+
+	console.log(req.body);
+
+	var info = {}
+
+	info.name = req.body.name;
+	info.pass = req.body.pass;
+
+	var entry = new User(info);
+
+	entry.save(function(err, user) {
+		if (err) {
+			console.log(err);
+			res.render("signup-failure");
+		} else {
+			res.render("signin-success");
+		}
+	})
 });
 
 app.post("/api/signin", function (req, res) {
-	res.json(req.body);
+
+	console.log(req.body);
+
+	User.findOne({name: req.body.name}, function (err, user) {
+
+		if (err) {
+			throw err;
+
+		} else {
+
+			if (user != null){
+				
+				if (req.body.pass === user.pass) {
+					res.render("signin-success");
+				
+				} else {
+					res.render("signin-failure");
+				
+				}
+			} else {
+				res.render("signin-failure");
+			}
+		}
+	})
 });
 
 app.get("/api/scrape/kotaku", function (req, res) {
@@ -59,8 +101,10 @@ app.get("/api/scrape/kotaku", function (req, res) {
 });
 
 
+app.post("/api/comment", function (req, res) {
 
-
+	res.json(req.body);
+});
 
 
 
