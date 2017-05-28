@@ -47,4 +47,6 @@ footer {
 	border-right: 1px solid #a586c7;
 }
 
-
+.well-margin {
+	margin: 5% 0;
+}

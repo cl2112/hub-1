@@ -19,6 +19,7 @@ app.post("/api/signup", function (req, res) {
 
 	info.name = req.body.name;
 	info.pass = req.body.pass;
+	info.userBrowserID = req.body.userBrowserID;
 
 	var entry = new User(info);
 

@@ -16,6 +16,9 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  userBrowserID: {
+    type: String,
+  },
   // This only saves one note's ObjectId, ref refers to the Note model
   notes: [{
     type: Schema.Types.ObjectId,

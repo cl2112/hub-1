@@ -45,7 +45,7 @@ module.exports = function(app) {
   				throw err;
   			} else {
   				
-  				var article = site.articles;
+  				var article = site.articles.sort().reverse();
 
   				res.render("hub-2", {article});
   			}
