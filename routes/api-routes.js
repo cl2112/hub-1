@@ -4,6 +4,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 
 var Article = require("../models/article.js");
+var Site = require("../models/site.js");
 //=================================================================================
 
 module.exports = function(app) {
@@ -30,16 +31,25 @@ app.get("/api/scrape/kotaku", function (req, res) {
 	      result.pic = $(this).children("div.item__content").children("figure").children("a").children("div").children("picture").children("source").attr("data-srcset");
 	      result.blurb = $(this).children("div.item__content").children("div.excerpt").children("p").text();
 
-	      // console.log(result);
+	      result.fromSite = Site.find({title: "Kotaku"}).select("_id");
+
+	      console.log(result);
 
 	      var entry = new Article(result);
 
 	      entry.save(function(err, doc) {
 	        if (err) {
-	          console.log(err);
+	        	console.log(err);
 	        }
 	        else {
-	          console.log(doc);
+	        	Site.findOneAndUpdate({title: "Kotaku"}, {$push: {"articles":doc._id}}, {new: true}, function (err, newdoc) {
+	        		if (err) {
+	        			console.log(err);
+	        		} else {
+	        			console.log(newdoc);
+	        		}
+	        	});
+	        	console.log(doc);
 	        }
 	      });
 
