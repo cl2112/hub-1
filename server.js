@@ -7,7 +7,7 @@ var express = require("express");
 
 //Initialize Express
 var app = express();
-var port = 2112 | process.env.PORT;
+var port = 2112 || process.env.PORT;
 
 
 //Handlebars
