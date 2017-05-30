@@ -24,7 +24,7 @@ app.set("view engine", "handlebars");
 var mongoose = require("mongoose");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/hub-1");
+mongoose.connect("mongodb://heroku_w4s35k4g:2j5ao6iud2v9hq3cgg4nj92rvs@ds149501.mlab.com:49501/heroku_w4s35k4g");
 var db = mongoose.connection;
 
 // Show any mongoose errors
