@@ -38,14 +38,17 @@ module.exports = function(app) {
   	app.get("/hub-2/:site", function (req,res) {
 
   		Site.findOne({title: req.params.site})
-  		.populate("articles")
+  		.populate({
+  			path: "articles",
+  			options: { sort: {dateCreated: -1}, limit:10 }
+  		})
   		.exec(function (err, site) {
 
   			if (err) {
   				throw err;
   			} else {
   				
-  				var article = site.articles.sort().reverse();
+  				var article = site.articles;
 
   				res.render("hub-2", {article});
   			}

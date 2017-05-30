@@ -11,54 +11,54 @@ var User = require("../models/user.js");
 
 module.exports = function(app) {
 
-app.post("/api/signup", function (req, res) {
+// app.post("/api/signup", function (req, res) {
 
-	console.log(req.body);
+// 	console.log(req.body);
 
-	var info = {}
+// 	var info = {}
 
-	info.name = req.body.name;
-	info.pass = req.body.pass;
-	info.userBrowserID = req.body.userBrowserID;
+// 	info.name = req.body.name;
+// 	info.pass = req.body.pass;
+// 	info.userBrowserID = req.body.userBrowserID;
 
-	var entry = new User(info);
+// 	var entry = new User(info);
 
-	entry.save(function(err, user) {
-		if (err) {
-			console.log(err);
-			res.render("signup-failure");
-		} else {
-			res.render("signin-success");
-		}
-	})
-});
+// 	entry.save(function(err, user) {
+// 		if (err) {
+// 			console.log(err);
+// 			res.render("signup-failure");
+// 		} else {
+// 			res.render("signin-success");
+// 		}
+// 	})
+// });
 
-app.post("/api/signin", function (req, res) {
+// app.post("/api/signin", function (req, res) {
 
-	console.log(req.body);
+// 	console.log(req.body);
 
-	User.findOne({name: req.body.name}, function (err, user) {
+// 	User.findOne({name: req.body.name}, function (err, user) {
 
-		if (err) {
-			throw err;
+// 		if (err) {
+// 			throw err;
 
-		} else {
+// 		} else {
 
-			if (user != null){
+// 			if (user != null){
 				
-				if (req.body.pass === user.pass) {
-					res.render("signin-success");
+// 				if (req.body.pass === user.pass) {
+// 					res.render("signin-success");
 				
-				} else {
-					res.render("signin-failure");
+// 				} else {
+// 					res.render("signin-failure");
 				
-				}
-			} else {
-				res.render("signin-failure");
-			}
-		}
-	})
-});
+// 				}
+// 			} else {
+// 				res.render("signin-failure");
+// 			}
+// 		}
+// 	})
+// });
 
 app.get("/api/scrape/kotaku", function (req, res) {
   	request("http://kotaku.com/", function(error, response, html) {
@@ -98,15 +98,53 @@ app.get("/api/scrape/kotaku", function (req, res) {
 
 		});
 	});
-	res.send("Scrape Completed");
+	res.redirect("/");
 });
 
 
 app.post("/api/comment", function (req, res) {
+	
+	var comment = {};
 
-	res.json(req.body);
+	comment.text = req.body.comment;
+
+	var entry = new Note(comment);
+
+	entry.save( function (err, doc) {
+	
+		if (err) {
+			throw err;		
+		} else {
+			
+			Article.findOneAndUpdate({_id: req.body.articleID}, {$push: {"notes":doc._id}}, {new: true}, function (err, newdoc) {
+	        	if (err) {
+	        		console.log(err);
+	        	} else {
+	        		console.log(newdoc);
+	        		res.redirect("back");
+	        	}
+	        });	
+	    }    	
+	});
 });
 
 
 
+app.post("/api/note/delete", function ( req, res ) {
+
+	// console.log(req.body.noteID);
+
+	Note.remove({_id: req.body.noteID}, function (err) {
+		if (err) {
+			throw err;
+		} else {
+			console.log("Comment deleted.");
+			
+			res.redirect("back");
+		}
+	});
+});
+
+
+// End of Export Obj
 };
