@@ -102,6 +102,49 @@ app.get("/api/scrape/kotaku", function (req, res) {
 });
 
 
+app.get("/api/scrape/PC-Gamer", function (req, res) {
+  	request("http://www.pcgamer.com/news/", function(error, response, html) {
+	    
+	    var $ = cheerio.load(html);
+	    $("div.listingResult").each(function(i, element) {
+
+	      var result = {};
+
+	      result.title = $(this).children("a").children("article").children("div.content").children("header").children("h3").text();
+	      result.link = $(this).children("a").attr("href");
+
+	      result.pic = $(this).children("a").children("article").children("div").children("figure").attr("data-original");
+	      result.blurb = $(this).children("a").children("article").children("div.content").children("p").text();
+
+	      result.fromSite = Site.find({title: "PC-Gamer"}).select("_id");
+
+	      console.log(result);
+
+	      var entry = new Article(result);
+
+	      entry.save(function(err, doc) {
+	        if (err) {
+	        	console.log(err);
+	        }
+	        else {
+	        	Site.findOneAndUpdate({title: "PC-Gamer"}, {$push: {"articles":doc._id}}, {new: true}, function (err, newdoc) {
+	        		if (err) {
+	        			console.log(err);
+	        		} else {
+	        			console.log(newdoc);
+	        		}
+	        	});
+	        	console.log(doc);
+	        }
+	      });
+
+		});
+	});
+	res.redirect("/");
+});
+
+
+
 app.post("/api/comment", function (req, res) {
 	
 	var comment = {};
